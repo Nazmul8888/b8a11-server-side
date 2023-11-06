@@ -43,7 +43,11 @@ async function run() {
     app.get('/course/:id', async(req,res)=>{
         const id = req.params.id;
         const query = {_id: new ObjectId(id)}
-        const result = await courseCollection.findOne(query);
+        
+        const options = {
+          projection: {courseName:1, image:1, Details:1, price:1},
+        };
+        const result = await courseCollection.findOne(query, options);
         res.send(result);
     })
 
