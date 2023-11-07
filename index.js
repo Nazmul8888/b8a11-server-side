@@ -33,6 +33,7 @@ async function run() {
     await client.connect();
 
     const courseCollection = client.db('course').collection('services');
+    const assignmentSubmit = client.db('course').collection('creation')
 
     app.get('/course',async(req,res)=>{
         const cursor = courseCollection.find();
@@ -43,12 +44,19 @@ async function run() {
     app.get('/course/:id', async(req,res)=>{
         const id = req.params.id;
         const query = {_id: new ObjectId(id)}
-        
         const options = {
-          projection: {courseName:1, image:1, Details:1, price:1},
+          projection: {title:1,image:1,description:1, price:1},
         };
         const result = await courseCollection.findOne(query, options);
         res.send(result);
+    })
+
+    // Submit section
+    app.post('/creation', async(req,res)=>{
+      const create = req.body;
+      console.log(create);
+      const result = await assignmentSubmit.insertOne(create);
+      res.send(result);
     })
 
 
