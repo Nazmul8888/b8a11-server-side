@@ -70,6 +70,28 @@ async function run() {
       res.send(result);
     })
 
+    app.patch('creation/:id',async(req,res)=>{
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const updateAssignment = req.body;
+      console.log(updateAssignment);
+      const updateDoc = {
+        $set:{
+          status: updateAssignment.status
+        },
+      };
+      const result = await assignmentSubmit.updateOne(filter,updateDoc);
+      res.send(result);
+    })
+
+    app.delete('/creation/:id', async(req,res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await assignmentSubmit.deleteOne(query);
+      res.send(result);
+
+    })
+
 
 
 
