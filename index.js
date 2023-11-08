@@ -8,7 +8,12 @@ const port = process.env.PORT || 5000;
 // middleware assignment11 p-33u5Tcb9UMIyaB8S
 
 
-app.use(cors());
+app.use(
+  cors({
+      origin: ['http://localhost:5173', 'https://assignment-eleven-a2aa1.web.app'],
+      credentials: true,
+  }),
+)
 app.use(express.json());
 
 
@@ -30,7 +35,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    
 
     const courseCollection = client.db('course').collection('services');
     const assignmentSubmit = client.db('course').collection('creation')
